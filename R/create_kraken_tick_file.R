@@ -6,7 +6,7 @@ create_kraken_tick_file <- function(file_loc) {
 
   out_df <- data.frame(price = numeric(),
                        vol = numeric(),
-                       time = numeric(),
+                       unix_time = numeric(),
                        buy_sell = character(),
                        mark_lim = character(),
                        misc = character())
