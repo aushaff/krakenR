@@ -12,7 +12,7 @@ create_kraken_tick_file <- function(file_loc) {
                        misc = character())
 
   #header <- c("price", "volume", "time", "buy_sell", "mark_lim", "misc")
-  cat("in create_kraken_tick_file", "\n")
+  #cat("in create_kraken_tick_file", "\n")
   write.csv(out_df, file = file_loc,
             row.names = FALSE)
   return(1)
