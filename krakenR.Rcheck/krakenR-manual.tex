@@ -1,0 +1,49 @@
+\nonstopmode{}
+\documentclass[letterpaper]{book}
+\usepackage[times,inconsolata,hyper]{Rd}
+\usepackage{makeidx}
+\usepackage[utf8]{inputenc} % @SET ENCODING@
+% \usepackage{graphicx} % @USE GRAPHICX@
+\makeindex{}
+\begin{document}
+\chapter*{}
+\begin{center}
+{\textbf{\huge Package `krakenR'}}
+\par\bigskip{\large \today}
+\end{center}
+\begin{description}
+\raggedright{}
+\inputencoding{utf8}
+\item[Type]\AsIs{Package}
+\item[Title]\AsIs{What the Package Does (Title Case)}
+\item[Version]\AsIs{0.1.0}
+\item[Author]\AsIs{Who wrote it}
+\item[Maintainer]\AsIs{The package maintainer }\email{yourself@somewhere.net}\AsIs{}
+\item[Description]\AsIs{More about what it does (maybe more than one line)
+Use four spaces when indenting paragraphs within the Description.}
+\item[License]\AsIs{What license is it under?}
+\item[Encoding]\AsIs{UTF-8}
+\item[LazyData]\AsIs{true}
+\item[Imports]\AsIs{jsonlite}
+\end{description}
+\Rdcontents{\R{} topics documented:}
+\inputencoding{utf8}
+\HeaderA{hello}{Hello, World!}{hello}
+%
+\begin{Description}\relax
+Prints 'Hello, world!'.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+hello()
+\end{verbatim}
+\end{Usage}
+%
+\begin{Examples}
+\begin{ExampleCode}
+hello()
+\end{ExampleCode}
+\end{Examples}
+\printindex{}
+\end{document}
