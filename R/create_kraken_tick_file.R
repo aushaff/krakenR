@@ -9,7 +9,8 @@ create_kraken_tick_file <- function(file_loc) {
                        unix_time = numeric(),
                        buy_sell = character(),
                        mark_lim = character(),
-                       misc = character())
+                       misc = character(),
+                       time = character())
 
   #header <- c("price", "volume", "time", "buy_sell", "mark_lim", "misc")
   #cat("in create_kraken_tick_file", "\n")
