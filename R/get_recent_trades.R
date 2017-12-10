@@ -5,11 +5,12 @@
 #' and 'last'. the id to be used as since when polling for new trade data
 #'@param base_url https://api.kraken.com/0/public/Trades
 # needs to catch http error 522
-get_recent_trades <- function(pair = "XBTEUR",
-                              since = 0) {
+get_recent_trades <- function(pair,
+                              since) {
 
   base_url <- "https://api.kraken.com/0/public/Trades"
-  url <- paste0(base_url, "?", "pair=", pair)
+
+  url <- paste0(base_url, "?", "pair=", pair, "&", "since=", since)
   trades_ret <- c() # empty structure for return (data or error)
 
   # catch errors when calling the url and return them in the
