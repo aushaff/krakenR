@@ -4,7 +4,6 @@
 #' <price>, <volume>, <time>, <buy/sell>, <market/limit>, <miscellaneous>
 #' and 'last'. the id to be used as since when polling for new trade data
 #'@param base_url https://api.kraken.com/0/public/Trades
-# needs to catch http error 522
 get_recent_trades <- function(pair,
                               since) {
 
