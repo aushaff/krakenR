@@ -15,29 +15,30 @@ get_recent_trades <- function(pair,
 
   # catch errors when calling the url and return them in the
   # same format as usual output
-  tryCatch({
+#  tryCatch({
 
     trades_ret <- jsonlite::fromJSON(url)
 
-  }, error = function(err) {
-    print(paste0("Error caught: ", err))
-    trades_ret$error <- list(err)
-    trades_ret$last <- since
     return(trades_ret)
-  })
-
-  # if an error message is returned handle it
-  # and return all the data
-  err <- trades_ret$error
-  if(length(err)>0) {
-    cat("Error received retrieving data")
-    return(trades_ret)
-
-    # otherwise return the data and the last time
-  } else {
-
-    trades_out <- trades_ret$result
-  }
-
-  return(trades_out)
+  # }, error = function(err) {
+  #   print(paste0("Error caught: ", err))
+  #   trades_ret$error <- list(err)
+  #   trades_ret$last <- since
+  #   return(trades_ret)
+  # })
+  #
+  # # if an error message is returned handle it
+  # # and return all the data
+  # err <- trades_ret$error
+  # if(length(err)>0) {
+  #   cat("Error received retrieving data")
+  #   return(trades_ret)
+  #
+  #   # otherwise return the data and the last time
+  # } else {
+  #
+  #   trades_out <- trades_ret$result
+  # }
+  #
+  # return(trades_out)
 }
