@@ -1,4 +1,200 @@
-R package to access the Kraken api. 
-https://www.kraken.com/help/api
+---
+title: "krakenR API interface"
+author: "Austin Haffenden"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
 
-Very much a work in progress. 
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+```{r libs}
+library(krakenR)
+
+```
+
+
+#Introduction
+
+This package interfaces with the kraken API. Currently only for the the GET functions and not all are implemented. It is a work in progress. 
+
+# Get asset information
+
+Interogate the API for information on the existing assets. Output returned as a
+list with two elements: error and result. The error element is empty if no error occured. The result element is empty if an error occured. Currently default
+settings so returns information on all assets:  
+
+* asset_name = asset name  
+* altname = alternate name  
+* aclass = asset class (e.g. currency)  
+* decimals = scaling decimal places for record keeping  
+* display_decimals = scaling decimals for output display  
+
+```{r asset, eval=TRUE, include=TRUE}
+ast_inf <- get_asset_info()
+
+ast_inf$error
+
+ast_inf$result[[1]]
+
+```
+
+# Get OHLC data
+
+Get market history OHLC data for a specified asset pair. Time frame interval
+is specifed in minutes: 1 (default), 5, 15, 30, 60, 240, 1440, 10080, 21600. 
+Since can also be provided in Unix long form. Output returned as a list with 
+two elements: error and result. The error element is empty if no error occured. The result element is empty if an error occured. Result contains two elements:
+the returned OHLC data and the 'last' date in the data set. The default since 
+is 0 (earliest). Data returned:  
+time; open; high; low; close; vwap; volume; count
+
+```{r OHLC}
+ohlc <- get_ohlc_data(pair = "BCHEUR", interval = 30, since = 0)
+
+ohlc$error
+
+head(ohlc$result$BCHEUR)
+
+ohlc$result$last
+```
+
+# Get order book
+
+Return the current bid and ask orders for a specific asset. Output returned as
+a list with two elements: error and result. The error element is empty if no 
+error occured. The result element is empty if an error occured. Result contains
+two elements: asks; bids. Optional to pass 'count', the maximum number of 
+asks/bids (not implemented). Data returned as:  
+price; volume; timestamp
+
+```{r order}
+ord <- get_order_book("BCHEUR")
+
+ord$error
+
+head(ord$result$BCHEUR$asks)
+
+head(ord$result$BCHEUR$bids)
+
+```
+# Get recent spread data
+
+Returns the recent spread data for a specified asset from a specified since.
+Output returned as a list with two elements: error and result. The error 
+element is empty if no error occured. The result element is empty if an error
+occured. Result contains two elements: the spread entries for the asset; last,
+the id to be used as since when polling for new spread data. Data returned as: 
+time; bid; ask
+
+```{r spread}
+sprd <- get_recent_spread("BCHEUR", since = "1530876860")
+
+sprd$error
+
+head(sprd$result$BCHEUR)
+
+sprd$result$last
+
+```
+
+# Get recent trades
+
+Returns the recent trades for a specified asset from a specified since (default
+is zero). Output returned as a list with two elements: error and result. The
+error element is empty if no error occured. The result element is empty if an error occured. Result contains two elements: the trade data for the specified
+asset over the specified period; last, the id to be used as since when polling for new trade data. Data returned as: 
+price; volume; time; buy/sell; market/limit; miscellaneous
+
+```{r trades}
+trd <- get_recent_trades("BCHEUR", since = "1501605300157840478")
+
+trd$error
+
+head(trd$result$BCHEUR)
+
+trd$result$last
+
+```
+
+# Get server time
+
+Returns a unix timestamp and an RFC 1123 time format. This is to aid in 
+approximating the skew time between server and client. 
+
+```{r time}
+get_server_time()
+
+```
+
+# Get ticker info
+
+Returns the ticker info for a comma seperated list of assets. Output returned
+as a list with two elements: error and result. The error element is empty if no error occured. The result element is empty if an error occured. Data returned
+for each pair:  
+
+* a = ask array(price, whole lot volume, lot volume)  
+* b = bid array(price, whole lot volume, lot volume)  
+* c = last trade closed array(price, lot volume)  
+* v = volume array(today, last 24 hours)  
+* p = volume weighted average price array(today, last 24 hours)  
+* t = number of trades array(today, last 24 hours)  
+* l = low array(today, last 24 hours)  
+* h = high array(today, last 24 hours)  
+* o = today's opening price  
+
+```{r ticker}
+pair_list <- paste("BCHEUR", "XBTEUR", sep = ",")
+tick <- get_ticker_info(pair_list)
+
+tick$error
+
+tick$result$BCHEUR
+
+
+```
+# Get tradeable asset pair
+
+Returns the requested information for a comma seperated list of tradeable asset
+pairs. Information requested can be: "info": all info (default); "leverage":
+leverage info; fees: fees schedule; margin: margin info.Output returned as a
+list with two elements: error and result. The error element is empty if no 
+error occured. The result element is empty if an error occured. 
+Data returned is: 
+
+* pair_name = pair name 
+* altname = alternate pair name  
+* aclass_base = asset class of base component  
+* base = asset id of base component  
+* aclass_quote = asset class of quote component  
+* quote = asset id of quote component  
+* lot = volume lot size  
+* pair_decimals = scaling decimal places for pair  
+* lot_decimals = scaling decimal places for volume  
+* lot_multiplier = amount to multiply lot volume by to get currency volume  
+* leverage_buy = array of leverage amounts available when buying  
+* leverage_sell = array of leverage amounts available when selling  
+* fees = fee schedule array in [volume, percent fee] tuples  
+* fees_maker = maker fee schedule array in [volume, percent fee] tuples 
+(if on maker/taker)  
+* fee_volume_currency = volume discount currency  
+* margin_call = margin call level  
+* margin_stop = stop-out/liquidation margin level  
+
+```{r tap}
+tap <- get_tradable_asset_pair(info = "margin", 
+                               pair_list = "BCHEUR, XBTEUR")
+
+tap$error
+
+tap$result$BCHEUR
+
+```
+
