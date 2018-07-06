@@ -1,6 +1,7 @@
 #'@title gets the server time.
 #'@description aid to aaproximating the skew time between server and client.
 #'returns unix timestamp and time in RFC1123 format
+#'@export
 get_server_time <- function() {
 
   serv_time_results <- jsonlite::fromJSON("https://api.kraken.com/0/public/Time")

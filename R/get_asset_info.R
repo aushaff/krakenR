@@ -1,6 +1,8 @@
-#'@title
-#'@description
-# https://api.kraken.com/0/public/Assets?info='currency'
+#'@title Get asset information
+#'@description Currently only works with defaults; returns all information
+#'about all asset classes
+#'@return list of asset names and their information
+#'@export
 
 get_asset_info <- function() {
 

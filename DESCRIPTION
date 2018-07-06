@@ -1,13 +1,16 @@
 Package: krakenR
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Interface with the Kraken API
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Author: Austin Haffenden
+Maintainer: Austin Haffenden <haffamoto@yahoo.co.uk>
+Description: R functions to interface with the Kraken API. Currently only the GET functions and not all. Work in progress. 
+License: GPL-3 + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Imports:
 	jsonlite
+Suggests: knitr,
+    rmarkdown
+VignetteBuilder: knitr
+RoxygenNote: 6.0.1
