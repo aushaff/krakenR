@@ -3,7 +3,6 @@
 #'about all asset classes
 #'@return list of asset names and their information
 #'@export
-
 get_asset_info <- function() {
 
   url <- "https://api.kraken.com/0/public/Assets"
