@@ -9,7 +9,7 @@ get_recent_trades <- function(pair,
   base_url <- "https://api.kraken.com/0/public/Trades"
 
   url <- paste0(base_url, "?", "pair=", pair, "&", "since=", since)
-
+  print(url)
   trades_ret <- jsonlite::fromJSON(url)
 
   return(trades_ret)

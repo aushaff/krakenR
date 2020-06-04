@@ -13,7 +13,9 @@ get_ohlc_data <- function(pair = "XBTEUR",
                           since = 0) {
 
   base_url <- "https://api.kraken.com/0/public/OHLC"
-  url <- paste0(base_url, "?", "pair=", pair)
+  url <- paste0(base_url, "?", "pair=", pair,
+                "&since=", since,
+                "&interval=", interval)
 
   ohlc_out <- jsonlite::fromJSON(url)
 
