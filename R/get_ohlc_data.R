@@ -21,3 +21,6 @@ get_ohlc_data <- function(pair = "XBTEUR",
 
   return(ohlc_out)
 }
+
+library(jsonlite)
+mydata <- fromJSON(url)
